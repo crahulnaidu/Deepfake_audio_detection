@@ -8,8 +8,8 @@ __pycache__/
 .vscode/
 .idea/
 
-# Data and Weights (Per assignment rules)
-data/
+# Data and Weights (Explicitly top-level only)
+/data/
 datasets/
 checkpoints/
 *.pth
