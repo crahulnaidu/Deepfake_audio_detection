@@ -90,3 +90,8 @@ git commit -m "Structure: Setup project blueprint and documentation ledger"
 # Push the architecture blueprint up to your main branch
 git push origin main
 ```
+
+## 5. Phase 1 Dependencies
+```bash
+pip install torch torchaudio soundfile pandas scikit-learn
+```
