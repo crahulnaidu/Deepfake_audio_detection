@@ -95,3 +95,10 @@ git push origin main
 ```bash
 pip install torch torchaudio soundfile pandas scikit-learn
 ```
+
+## 6. Data Transfer: Sourcing Fake Audio from Drive
+```bash
+# Installed gdown to pull heavy drive resources
+pip install gdown
+gdown  YOUR_FILE_ID -O data/raw/fake/
+```
