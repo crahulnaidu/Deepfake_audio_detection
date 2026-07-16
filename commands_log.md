@@ -102,3 +102,13 @@ pip install torch torchaudio soundfile pandas scikit-learn
 pip install gdown
 gdown  YOUR_FILE_ID -O data/raw/fake/
 ```
+
+## 7. Phase 2: Created VoIP Simulation Engine
+```bash
+# Added degradation logic file to src/augmentations/voip_sim.py
+```
+
+## 8: Pipeline EDA and Visualization
+```bash
+python visualize_voip.py
+```
