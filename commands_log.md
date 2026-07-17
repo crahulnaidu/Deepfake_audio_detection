@@ -112,3 +112,8 @@ gdown  YOUR_FILE_ID -O data/raw/fake/
 ```bash
 python visualize_voip.py
 ```
+
+## 9 Day 4: Model Architecture Setup
+```bash
+# Added ECAPA-TDNN neural architecture layout to src/models/ecapa_tdnn.py
+```
