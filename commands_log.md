@@ -117,3 +117,10 @@ python visualize_voip.py
 ```bash
 # Added ECAPA-TDNN neural architecture layout to src/models/ecapa_tdnn.py
 ```
+
+## 12. Phase 3 Day 6 Benchmark Complete
+```bash
+python3 train.py
+python3 evaluate.py
+```
+* Clean EER: 12.09% | VoIP EER: 12.49% | EER Gap: +0.40%

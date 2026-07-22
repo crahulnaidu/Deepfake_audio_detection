@@ -52,3 +52,31 @@ Python
 if waveform.ndim == 0 or waveform.shape[-1] == 0:
     waveform = torch.zeros((1, self.max_samples))
     sr = self.target_sr
+
+---
+
+## 7. `All-NaN slice encountered` in EER Calculation
+* **Error:** `ValueError: All-NaN slice encountered` inside `compute_eer()` during `evaluate.py`.
+* **Root Cause:** When running evaluation on untrained weights or single-class batches, `y_scores` are identical across all samples. `roc_curve()` yields `NaN` values for FPR/FNR arrays, causing `np.nanargmin()` to fail.
+* **Fix:** Added a class/score check at the start of `compute_eer()` to return a default fallback threshold (`0.50`) and masked out `NaN` values before computing array minimums.
+
+---
+
+## 8. Single-Class Test Set in Speaker-Disjoint Splitting
+* **Error:** `Confusion Matrix [[1999]]` and `ROC-AUC: nan` during `evaluate.py`.
+* **Root Cause:** Splitting speaker IDs globally without stratified class constraints resulted in all real speakers being assigned to the training split, leaving only fake speakers in the test split.
+* **Fix:** Updated `get_speaker_disjoint_splits()` in `src/data/dataset.py` to partition Real and Fake speaker maps independently before merging, guaranteeing class balance across Train, Validation, and Test sets.
+
+---
+
+## 10. Majority Class Prediction Bias (Zero True Negatives)
+* **Error:** Confusion matrix yielded `[[0, 880], [0, 1987]]` (all predictions collapsed to class 1).
+* **Root Cause:** Unbalanced dataset sizes (11,990 Fake vs. 5,406 Real) caused standard Unweighted Binary Cross-Entropy Loss to default to predicting the majority class.
+* **Fix:** Implemented weighted loss in `train.py` via `nn.BCEWithLogitsLoss(pos_weight=num_real/num_fake)` to equalize class importance during backpropagation.
+
+---
+
+## 11. Final Phase 3 Milestone: Model Optimization & Robustness Benchmark
+* **Status:** Resolved & Verified.
+* **Outcome:** Retraining ECAPA-TDNN with `pos_weight` class balancing eliminated the majority class prediction bias, yielding an optimal ROC-AUC score of **0.9374** and reducing Clean EER to **12.09%**.
+* **VoIP Evaluation:** Subjecting the test set to simulated VoIP degradation resulted in an EER of **12.49%**—demonstrating a minimal EER degradation gap of **+0.40%** and validating the model's resilience under real-world telecom conditions.
